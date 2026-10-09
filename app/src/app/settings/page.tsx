@@ -1,4 +1,5 @@
 "use client";
+import { AccountPanel } from "@/components/AccountPanel";
 import { useState } from "react";
 import { clsx } from "clsx";
 import { Check, Download, Monitor, Moon, Pencil, Sun, Trash2, ChevronRight, HardDrive, SlidersHorizontal } from "lucide-react";
@@ -84,6 +85,8 @@ export default function Settings() {
           <h1 className="display text-[30px] lg:text-[38px] leading-tight">{t(lang, "st_heading")}</h1>
           <p className="text-[14px] text-ink-3 mt-3 leading-relaxed">{t(lang, "st_intro")}</p>
         </header>
+
+        <AccountPanel lang={lang} />
 
         <div className="contents lg:flex lg:flex-col lg:gap-12 lg:pr-10">
           <section className="flex flex-col gap-3">

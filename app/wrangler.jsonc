@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "hallway-track",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-01",
+  // global_fetch_strictly_public: requests the Worker makes (to a user's model
+  // endpoint) can only reach the public internet.
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "observability": { "enabled": true },
+
+  // The site's address. The zone ycjian.com must be on the same Cloudflare account.
+  "routes": [{ "pattern": "hallway.ycjian.com", "custom_domain": true }],
+
+  // Accounts: who may sign in and each person's model endpoint. Practice
+  // records are not stored here; they stay in each browser.
+  "d1_databases": [
+    { "binding": "DB", "database_name": "hallway-track", "database_id": "d3a4c2c1-d1c5-4f97-992d-56a91f3f5d47", "migrations_dir": "migrations" }
+  ],
+
+  "vars": {
+    "APP_ORIGIN": "https://hallway.ycjian.com",
+    // GitHub usernames allowed to sign in, comma-separated. "*" admits anyone with a GitHub account.
+    "AUTH_ALLOWED_LOGINS": "MTDickens",
+    // No shared key on this deployment: everyone uses their own model.
+    "LLM_REQUIRE_BYOK": "true"
+  }
+  // Secrets, set once in the Cloudflare dashboard or with `wrangler secret put`:
+  //   ACCOUNT_SECRET        32+ random characters; signs sessions and encrypts stored API keys
+  //   GITHUB_CLIENT_ID      from the GitHub OAuth app
+  //   GITHUB_CLIENT_SECRET  from the GitHub OAuth app
+}

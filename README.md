@@ -40,6 +40,10 @@ pnpm dev                       # http://localhost:3000
 pnpm check                     # lint、类型、语料检查、全部测试
 ```
 
+## 部署成一个网站
+
+`app/wrangler.jsonc` 已经配好 Cloudflare Workers + D1：GitHub 登录（白名单），每个人把自己的 API 地址、key、模型和 reasoning effort 保存在账号里，key 加密存储。步骤见 [docs/deploy-cloudflare.md](docs/deploy-cloudflare.md)。练习记录不上传。
+
 ## 要知道的几件事
 
 - **模拟的投资人是模型想象中的投资人。** 场合手册标了「依据」的条目来自公开来源，其余是编者归纳，不是研究结论。它是一张起步地图，要靠你自己的实战笔记修正。

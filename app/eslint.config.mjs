@@ -16,6 +16,9 @@ const eslintConfig = defineConfig([
     "public/3d/draco/**",
     // Reproducible upstream PDF/OCR workers; sources remain in the package lock.
     "public/local-reading/**",
+    // Cloudflare build output and local emulator state.
+    ".open-next/**",
+    ".wrangler/**",
   ]),
 ]);
 

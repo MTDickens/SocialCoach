@@ -40,6 +40,10 @@ Anthropic and any OpenAI-compatible endpoint work. No account, no database; prac
 pnpm check                     # lint, types, corpus check, all tests
 ```
 
+## Deploying it as a site
+
+`app/wrangler.jsonc` is set up for Cloudflare Workers + D1: GitHub sign-in behind an allow-list, and each person keeps their own API endpoint, key, models and reasoning effort with their account, the key encrypted at rest. Steps are in [docs/deploy-cloudflare.md](docs/deploy-cloudflare.md) (Chinese). Practice records are never uploaded.
+
 ## Things to know
 
 - **A simulated investor is a model's idea of an investor.** Field-guide entries with a "grounded in" line draw on public sources; the rest is editorial synthesis, not research findings. It is a starting map, to be corrected by your own field notes.

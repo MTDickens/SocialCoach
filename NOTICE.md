@@ -45,6 +45,18 @@ relicense it.
   `docs/upstream-README.zh-CN.md` and `docs/upstream-README.en.md`.
 - `AGENTS.md` — a section on this fork.
 
+## Added for the Cloudflare deployment
+
+- `app/src/lib/account/`, `app/src/app/api/auth/`, `app/src/app/api/account/`,
+  `app/src/components/AccountPanel.tsx`, `app/migrations/`,
+  `app/wrangler.jsonc`, `app/open-next.config.ts`, `app/.dev.vars.example`,
+  `app/tests/core/accounts.test.ts`, `docs/deploy-cloudflare.md` — GitHub
+  sign-in and a per-person model configuration stored in Cloudflare D1.
+- Every model route under `app/src/app/api/` now resolves its model through
+  `requestModel()`; `app/src/app/api/health/route.ts` reports a signed-in
+  person's own endpoint. Upstream's rule against accounts and server-side
+  storage is deliberately relaxed here, for the model configuration only.
+
 ## Not changed
 
 The 58 upstream scenarios, the 3D scenes and their assets, the video lessons,

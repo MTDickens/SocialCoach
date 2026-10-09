@@ -8,6 +8,7 @@ import { acceptModelCheck, refreshModelAccess, useModelAccess } from "@/lib/mode
 import { M, modelMessage } from "@/lib/model-copy";
 import { pick } from "@/lib/i18n";
 import { useLang } from "@/store/useApp";
+import { useAccount } from "@/components/AccountPanel";
 import type { ModelCheck } from "@/lib/model-status";
 import type { Provider } from "@/lib/llm-core";
 import {modelBaseUrl} from '@/lib/llm-core';
@@ -15,6 +16,16 @@ import type {Lang} from '@/data/taxonomy';
 
 const input = "h-11 w-full min-w-0 px-3.5 rounded-xl bg-card border border-line text-[16px] sm:text-[14px] focus:border-ink transition-colors placeholder:text-ink-4";
 const DEFAULT = { openai: "gpt-4.1-mini", anthropic: "claude-sonnet-5-5" };
+
+/** Where the deployment has accounts, the server-kept configuration is the better home for a key. */
+function AccountHint({ lang, onClose }: { lang: Lang; onClose: () => void }) {
+  const { account, load } = useAccount();
+  useEffect(() => { void load(); }, [load]);
+  if (!account?.available) return null;
+  return <a href="/settings#account" onClick={onClose} className="press rounded-xl bg-paper-deep px-4 py-3 text-[13px] leading-relaxed text-ink-2">
+    {pick(account.user ? { zh: "你已登录。把模型配置保存到账号，换设备也能用，也不受中转站跨域限制 →", en: "You are signed in. Save the model to your account: it follows you across devices and is not blocked by a gateway’s CORS rules →" } : { zh: "登录后可以把模型配置保存到账号，换设备也能用，也不受中转站跨域限制 →", en: "Sign in to keep the model with your account: it follows you across devices and is not blocked by a gateway’s CORS rules →" }, lang)}
+  </a>;
+}
 
 function ModelForm({ onClose,lang }: { onClose: () => void;lang:Lang }) {
   const access = useModelAccess();
@@ -45,6 +56,7 @@ function ModelForm({ onClose,lang }: { onClose: () => void;lang:Lang }) {
   };
   return <div className="flex flex-col gap-5 pt-1 pb-2">
     <p className="text-[14px] text-ink-3 leading-relaxed">{pick(access.source === "server" && access.state === "unavailable" && access.issue !== "setup" ? M.sharedUnavailableIntro : M.intro, lang)}</p>
+    <AccountHint lang={lang} onClose={onClose} />
     <fieldset disabled={busy} className="flex flex-col gap-5 disabled:opacity-70">
       <div><p className="eyebrow mb-2">{pick(M.provider, lang)}</p><div className="flex flex-wrap gap-2">{(["anthropic", "openai"] as Provider[]).map(provider => <Chip key={provider} active={draft.provider === provider} onClick={() => {if(provider!==draft.provider)update({ provider,apiKey:"",fastModel: "", smartModel: "", baseUrl: "", disableThinking: false });}}>{provider === "anthropic" ? "Anthropic" : "OpenAI"}</Chip>)}</div></div>
       <div>
