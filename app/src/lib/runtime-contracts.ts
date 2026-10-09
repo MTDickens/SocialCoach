@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {SKILLS,CONTEXTS,COMPETENCIES,type SkillId,type ContextId,type CompetencyId} from '@/data/taxonomy';
+import {SKILLS,CONTEXTS,COMPETENCIES,RELATIONSHIP_IDS,type SkillId,type ContextId,type CompetencyId} from '@/data/taxonomy';
 import type {Scenario} from '@/data/corpus/types';
 import {jsonCall,LLMError,type JSONCallOpts,type LLM} from './llm-core';
 import {pick} from './i18n';
@@ -14,7 +14,7 @@ const character=z.object({id:text.regex(/^[a-zA-Z0-9_-]{1,100}$/),name:content,r
 export const ScenarioSchema=z.object({
  id:text.min(1),title:content,hook:content,background:content,simulationFacts:LocalizedSchema.optional(),simulationDirection:LocalizedSchema.optional(),
  context:ContextSchema,contextType:content,competencies:z.array(CompetencySchema).min(1),skills:z.array(SkillSchema).min(1),relatedSkills:z.array(SkillSchema).optional(),
- relationship:z.array(z.enum(['senior','peer','junior','partner','parent','child','sibling','friend','stranger','customer','teacher'])).min(1),difficulty:z.union([z.literal(1),z.literal(2),z.literal(3)]),minutes:z.number().positive(),
+ relationship:z.array(z.enum(RELATIONSHIP_IDS)).min(1),difficulty:z.union([z.literal(1),z.literal(2),z.literal(3)]),minutes:z.number().positive(),
  characters:z.array(character).min(2).max(12),objectives:z.array(content).min(1).max(10),success:content,failure:content,maxTurns:z.number().int().min(1).max(200),
  opening:z.object({characterId:text.min(1),text:content}),icon:text.optional(),source:text.min(1),keywords:z.array(text),custom:z.boolean().optional(),
 }).superRefine((s,ctx)=>{

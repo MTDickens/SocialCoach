@@ -25,14 +25,14 @@ export function SharePractice({open,onClose,session,stars,quality,lang}:{open:bo
   const owned=++generation.current;let url:string|undefined;let disposed=false;
   setReady(null);setError(null);setImageStatus('preparing');
   void renderShareCard(canvas.current,{...card,quote:include?card.quote:''}).then(blob=>{
-   if(disposed||owned!==generation.current)return;url=URL.createObjectURL(blob);setReady({url,file:new File([blob],'SocialCoach-practice.png',{type:'image/png'})});setImageStatus('ready');
+   if(disposed||owned!==generation.current)return;url=URL.createObjectURL(blob);setReady({url,file:new File([blob],'hallway-track-practice.png',{type:'image/png'})});setImageStatus('ready');
   }).catch(()=>{if(!disposed&&owned===generation.current)setImageStatus('failed');});
   return()=>{disposed=true;if(url)URL.revokeObjectURL(url);};
  },[open,card,include,lang,retry]);
  const copy=async()=>{if(copying)return;setCopying(true);setError(null);try{await copyShareText(shareCardText(actual),navigator.clipboard);toast(text('copied'));}catch{setError(text('copyFailure'));}finally{setCopying(false);}};
  const share=async()=>{if(!ready||sharing)return;setSharing(true);setError(null);try{const result=await sharePreparedFile(ready.file,navigator);if(result==='unsupported')setError(text('unsupported'));}catch{setError(text('failure'));}finally{setSharing(false);}};
  return <Sheet open={open} onClose={onClose} title={text('title')} wide footer={<div className="flex flex-wrap items-center gap-3">
-  {ready?<a className="press inline-flex min-h-11 items-center gap-2 px-4 border border-line rounded-xl bg-card text-[14px]" href={ready.url} download="SocialCoach-practice.png"><Download size={16}/>{text('save')}</a>:imageStatus==='failed'?<Button variant="secondary" onClick={()=>setRetry(v=>v+1)}>{text('retry')}</Button>:<span role="status" className="text-[13px] text-ink-3">{text('preparing')}</span>}
+  {ready?<a className="press inline-flex min-h-11 items-center gap-2 px-4 border border-line rounded-xl bg-card text-[14px]" href={ready.url} download="hallway-track-practice.png"><Download size={16}/>{text('save')}</a>:imageStatus==='failed'?<Button variant="secondary" onClick={()=>setRetry(v=>v+1)}>{text('retry')}</Button>:<span role="status" className="text-[13px] text-ink-3">{text('preparing')}</span>}
   <Button variant="ghost" disabled={copying} onClick={()=>void copy()}><Copy size={16}/>{text('copy')}</Button><Button variant="ghost" disabled={!ready||sharing} onClick={()=>void share()}><Share2 size={16}/>{text('native')}</Button>
  </div>}>
   <p className="text-[14px] text-ink-2 leading-relaxed mb-5">{text('privacy')}</p>

@@ -136,7 +136,7 @@ export function Debrief({ session }: { session: Session }) {
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="flex-1 flex flex-col gap-8 pt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_var(--margin-w)] lg:gap-x-10 lg:items-start lg:pt-14">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col items-center text-center gap-4 lg:items-start lg:text-left">
-              {session.sceneContext?<span className="eyebrow text-teal">SocialCoach · 3D</span>:<StarBurst n={n} of={sc.objectives.length} />}
+              {session.sceneContext?<span className="eyebrow text-teal">Hallway Track · 3D</span>:<StarBurst n={n} of={sc.objectives.length} />}
               <h1 className="display text-[32px] leading-tight">{session.sceneContext?pick(sceneReviewCopy.preparing,lang):t(lang, outcomeKey)}</h1>
               <p className="text-[14px] text-ink-3 max-w-[32ch]">{session.sceneContext?pick(sceneReviewCopy.preparingNote,lang):t(lang, "pr_ended_sub")}</p>
               {session.sceneContext&&<Quote text={session.messages.findLast(m=>m.role==='learner')?.text} session={session}/>}

@@ -1,6 +1,8 @@
 import {z} from 'zod';
 import {ScenarioSchema,SkillSchema,ContextSchema,AdaptationSchema} from './runtime-contracts';
 import {SceneContextSchema} from './scene-context';
+import {WritingDraftSchema} from './writing';
+import {FieldNoteSchema} from './field-notes';
 
 const text=z.string(),strings=z.array(text),num=z.number().finite();
 export const ProficiencySchema=z.partialRecord(SkillSchema,num.min(1).max(5));
@@ -27,6 +29,8 @@ const SessionSchema=z.object({
 }).superRefine((s,ctx)=>{if(!s.scenario.characters.some(c=>c.id===s.learnerCharacterId))ctx.addIssue({code:'custom',path:['learnerCharacterId'],message:'Learner must belong to the saved cast'});});
 export const ArchiveSchema=z.object({
  profile:ProfileSchema.nullable().default(null),onboardingLang:z.enum(['zh','en']).optional(),proficiency:ProficiencySchema.default({}),sessions:z.array(SessionSchema).default([]),customScenarios:z.array(ScenarioSchema).default([]),bookmarks:strings.default([]),practiceDays:strings.default([]),todaySessionId:text.nullable().default(null),todayDate:text.nullable().default(null),
+ // Hallway Track additions. Absent in archives written before the fork, hence the defaults.
+ writingDrafts:z.array(WritingDraftSchema).default([]),fieldNotes:z.array(FieldNoteSchema).default([]),
  settings:z.object({tts:z.boolean(),voiceEngine:z.enum(['natural','system']).optional(),theme:z.enum(['system','light','dark']).optional(),voiceNoticeSeen:z.boolean().optional(),avatarSeed:num.optional(),avatarPortrait:text.optional(),avatarImage:text.optional(),timed:z.boolean().optional(),patience:z.union([z.literal(10),z.literal(15),z.literal(20)]).optional(),telemetry:z.boolean().optional()}).default({tts:true}),
  // Old cached conclusions lack verified identity pointers. Recompute, never
  // erase the practice transcripts on which they were based.

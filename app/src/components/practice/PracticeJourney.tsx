@@ -19,7 +19,7 @@ export function PracticeJourney({ phase, onBack, backLabel, actions }: {
     <>
     <div className="practice-journey flex items-center gap-2 py-2 border-b border-line">
       <IconButton label={backLabel ?? t(lang, "pr_back_workspace")} onClick={onBack}><ArrowLeft size={19} /></IconButton>
-      <span className="hidden lg:block display text-[15px] pr-6">SocialCoach</span>
+      <span className="hidden lg:block display text-[15px] pr-6">Hallway Track</span>
       <ol aria-label={t(lang, "pr_journey")} className="flex flex-1 items-center justify-center gap-2 sm:gap-4 text-[12px]">
         {(["pr_step_prepare", "pr_step_talk", "pr_step_review"] as const).map((key, i) => (
           <li key={key} aria-current={phase === i ? "step" : undefined} className={clsx("flex items-center gap-1.5", phase === i ? "text-ink font-semibold" : "text-ink-3")}>

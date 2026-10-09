@@ -6,10 +6,10 @@ import { AppProviders } from "@/components/AppProviders";
 const hanken = Hanken_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-hanken", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "SocialCoach",
-  description: "想说的话，说出来。跟有自己目的、不会让你赢的 AI 角色实战演练，拿到引用你原话的教练复盘——告诉你是不会，还是会但没做到。每天 3 分钟。Say the thing you’ve been not saying.",
+  title: "Hallway Track",
+  description: "会场、晚宴、投资人的电话，先在这里练一遍。面向前沿 AI 研究者的社交练习：对面是不会顺着你的教授、投资人、创业者和 lab 研究员，练完拿到引用你原话的复盘。Practise the room before you walk into it. 基于 SocialCoach。",
   manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, statusBarStyle: "default", title: "SocialCoach" },
+  appleWebApp: { capable: true, statusBarStyle: "default", title: "Hallway Track" },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
 };
 

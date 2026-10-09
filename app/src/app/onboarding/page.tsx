@@ -6,7 +6,7 @@ import { track } from "@/lib/analytics/track";
 import { AnimatePresence, motion } from "framer-motion";
 import { clsx } from "clsx";
 import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
-import { COMPETENCIES, CONTEXTS, SKILLS, skillById, type ContextId, type SkillId } from "@/data/taxonomy";
+import { COMPETENCIES, CONTEXTS, DEFAULT_GOALS, FRONTIER_CONTEXTS, SKILLS, skillById, type ContextId, type SkillId } from "@/data/taxonomy";
 import { CONTEXT_HUES } from "@/data/scenario-icons";
 import { ContextIllustration } from "@/data/context-illustrations";
 import { t } from "@/lib/i18n";
@@ -37,7 +37,7 @@ export default function Onboarding() {
   const [contexts, setContexts] = useState<ContextId[]>([]);
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
-  const [open, setOpen] = useState<string | null>(COMPETENCIES[3].id);
+  const [open, setOpen] = useState<string | null>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { if (profile) router.replace(destination.current); }, [profile, router]);
 
@@ -57,7 +57,8 @@ export default function Onboarding() {
   const startNow = (path: "/rehearse" | "/arena") => {
     destination.current = path;
     // A practice direction is a default, not a self-rating. Leave estimates empty.
-    setProfile({ name: "", bio: "", goals: ["communication"], contexts: [], lang, createdAt: Date.now() });
+    // Start on the rooms this fork is for; both are editable later in Settings.
+    setProfile({ name: "", bio: "", goals: DEFAULT_GOALS, contexts: FRONTIER_CONTEXTS, lang, createdAt: Date.now() });
     track({ name: "onboarding_done", ts: Date.now() });
   };
 
@@ -123,6 +124,23 @@ export default function Onboarding() {
                 <p className="text-[14px] text-ink-3 mt-2">{t(lang, "ob_goals_sub")}</p>
                 <p className="text-[12px] text-ink-3 mt-1.5 inline-flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-accent" />{t(lang, "ob_goals_legend")}</p>
               </header>
+              <div className="card p-4 flex flex-col gap-3">
+                <div>
+                  <p className="font-semibold text-[15px]">{t(lang, "ob_track_title")}</p>
+                  <p className="text-[13px] text-ink-3 mt-1">{t(lang, "ob_track_sub")}</p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {SKILLS.filter((s) => s.track === "frontier").map((s) => {
+                    const on = goals.includes(s.id);
+                    return (
+                      <Chip key={s.id} active={on} onClick={() => toggleGoal(s.id)} style={on ? { background: compColor(s.competency, 0.42, 0.1), borderColor: compColor(s.competency, 0.42, 0.1) } : undefined}>
+                        {s.name[lang]}
+                      </Chip>
+                    );
+                  })}
+                </div>
+              </div>
+              <p className="eyebrow -mb-2">{t(lang, "ob_all_skills")}</p>
               <div className="flex flex-col gap-2">
                 {COMPETENCIES.map((c) => {
                   const skills = SKILLS.filter((s) => s.competency === c.id);

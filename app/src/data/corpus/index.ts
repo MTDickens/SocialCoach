@@ -6,6 +6,7 @@ import { SCENARIOS_C } from "./scenarios-c";
 import { SCENARIOS_D } from "./scenarios-d";
 import { CASES_C } from "./cases-c";
 import { CASES as CASES_BASE } from "./cases";
+import { FRONTIER_CASES, FRONTIER_ROLES, FRONTIER_SCENARIOS, FRONTIER_THEORIES } from "./frontier";
 import type { Case, Character, Scenario, Theory } from "./types";
 import { L } from "../taxonomy";
 
@@ -78,7 +79,7 @@ export function withLearner(s: Scenario): Scenario {
   const you: Character = {
     id: YOU_ID,
     name: L("你", "You"),
-    role: LEARNER_ROLE[s.id] ?? L("你自己", "Yourself"),
+    role: LEARNER_ROLE[s.id] ?? FRONTIER_ROLES[s.id] ?? L("你自己", "Yourself"),
     personality: L("", ""),
     stance: L("", ""),
     playable: true,
@@ -87,9 +88,11 @@ export function withLearner(s: Scenario): Scenario {
   return { ...s, characters: [you, ...s.characters] };
 }
 
-export const SCENARIOS: Scenario[] = [...SCENARIOS_A, ...SCENARIOS_B, ...SCENARIOS_C, ...SCENARIOS_D].map(withLearner);
-export const THEORIES: Theory[] = [...THEORIES_BASE, ...THEORIES_C];
-export const CASES: Case[] = [...CASES_BASE, ...CASES_C];
+// The fork's own scenes come first: they are what this app is for. The base
+// corpus stays, because the hard conversations it covers still happen.
+export const SCENARIOS: Scenario[] = [...FRONTIER_SCENARIOS, ...SCENARIOS_A, ...SCENARIOS_B, ...SCENARIOS_C, ...SCENARIOS_D].map(withLearner);
+export const THEORIES: Theory[] = [...FRONTIER_THEORIES, ...THEORIES_BASE, ...THEORIES_C];
+export const CASES: Case[] = [...FRONTIER_CASES, ...CASES_BASE, ...CASES_C];
 export type { Case, Scenario, Theory };
 
 export const scenarioById = (id: string) => SCENARIOS.find((s) => s.id === id);

@@ -19,6 +19,8 @@ import type { DebriefChatInput } from "./debrief-chat";
 import type { DebriefReply } from "./types";
 import { runAssess } from "./tasks/assess";
 import { runPattern } from "./tasks/pattern";
+import { runDraftReview } from "./tasks/draft-review";
+import type { WritingInput, WritingReview } from "./writing";
 import type { AssessInput, PatternInput, PatternResult, ReflectInput, ScheduleInput, TurnInput } from "./tasks/types";
 import { track } from "./analytics/track";
 import type { TrackEvent } from "./analytics/schema";
@@ -174,6 +176,17 @@ export function rehearse(body: { description: string; lang: Lang; profile?: Part
 export function pattern(body: PatternInput) {
   const o = own();
   return watched("pattern", !!o, body.lang, () => (o ? runPattern(taskInput(TaskInputSchemas["pattern"],body), taskLLM(o.llm,"pattern",undefined,undefined,body.lang), o.smart) : post<PatternResult>("/api/pattern", body)));
+}
+
+/** A simulated recipient's read of a draft, with every note tied to the learner's own words. */
+export function reviewDraft(body: WritingInput, signal?: AbortSignal) {
+  const o = own();
+  return watched("draft-review", !!o, body.lang, async () => {
+    signal?.throwIfAborted();
+    const review = o ? await runDraftReview(body, taskLLM(o.llm, "draft-review", signal, undefined, body.lang), o.smart, signal) : await post<WritingReview>("/api/draft-review", body, signal);
+    signal?.throwIfAborted();
+    return review;
+  });
 }
 
 const ERR = "\n@@error\n";

@@ -9,7 +9,7 @@ import { DINNER_LAUNCH_KEY } from "@/features/dinner/storage";
 import { Sheet } from "./ui";
 
 const copy = {
-  title: { zh: "SocialCoach，走进现场。", en: "Step into SocialCoach." },
+  title: { zh: "走进 3D 现场。", en: "Step into a 3D scene." },
   tag: { zh: "3D 实景 · 沉浸练习", en: "3D rehearsal · Step into the scene" },
   quote: { zh: "“你这杯不跟，是不是不给我面子？”", en: "“I don’t deserve your respect?”" },
   body: { zh: "陈总已经举杯，全桌都在等你。坐进去，试试这句话该怎么接。", en: "Chen has raised his glass. Everyone is waiting. Take a seat and try your response." },

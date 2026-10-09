@@ -6,7 +6,7 @@ import { t } from "@/lib/i18n";
 export function GitHubLink({ lang, className }: { lang: Lang; className?: string }) {
   return (
     <a
-      href="https://github.com/GeminiLight/SocialCoach"
+      href="https://github.com/MTDickens/SocialCoach"
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t(lang, "github_new_tab")}

@@ -1,4 +1,5 @@
 "use client";
+import { FRONTIER_SOURCES } from "@/data/corpus/frontier/sources";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -32,6 +33,9 @@ export function Briefing({ session }: { session: Session }) {
   const [attempt, setAttempt] = useState(0);
   const sc = session.scenario;
   const authoredDate = /^Original fictional practice — SocialCoach, (\d{4}-\d{2}-\d{2})\./u.exec(sc.source)?.[1];
+  // Hallway Track scenes carry their checked sources in the provenance line; show titles, not URLs.
+  const frontierDate = /^Original fictional practice — Hallway Track, (\d{4}-\d{2}-\d{2})\./u.exec(sc.source)?.[1];
+  const frontierRefs = frontierDate ? Object.values(FRONTIER_SOURCES).filter((v) => sc.source.includes(v.url)).map((v) => v.book).join("; ") : "";
   const adapting = !session.adaptation;
   const shownAt = useRef(0);
 
@@ -142,7 +146,7 @@ export function Briefing({ session }: { session: Session }) {
         <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-paper to-transparent lg:hidden" />
       </div>
 
-        <p className="text-[12px] text-ink-3">{t(lang, "source")}: {authoredDate ? t(lang, "pr_source_original", { date: authoredDate }) : sc.source}</p>
+        <p className="text-[12px] text-ink-3">{t(lang, "source")}: {frontierDate ? t(lang, "pr_source_frontier", { date: frontierDate, refs: frontierRefs }) : authoredDate ? t(lang, "pr_source_original", { date: authoredDate }) : sc.source}</p>
       </motion.div>
       </div>
 

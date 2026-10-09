@@ -4,7 +4,7 @@ export type ShareCard={lang:Lang;title:string;caption:string;quote:string;qualit
 export function defaultShareCard(lang:Lang,stars:number):ShareCard{
  return {lang,title:pick({zh:'难开口的话，\n我练过一遍了。',en:'I practiced the\nconversation I was avoiding.'},lang),caption:pick({zh:'下次面对同样的压力，试着把想说的话说出来。',en:'Next time the pressure returns, I will try saying what I mean.'},lang),quote:'',quality:pick({zh:`本次沟通表现 · ${stars}/3（模型估计）`,en:`Communication · ${stars}/3 (model estimate)`},lang)};
 }
-export function shareCardText(card:ShareCard){return ['SocialCoach',card.title.replaceAll('\n',' '),card.quality,card.quote?`“${card.quote}”`:'',card.caption].filter(Boolean).join('\n');}
+export function shareCardText(card:ShareCard){return ['Hallway Track',card.title.replaceAll('\n',' '),card.quality,card.quote?`“${card.quote}”`:'',card.caption].filter(Boolean).join('\n');}
 export async function copyShareText(value:string,clipboard:Pick<Clipboard,'writeText'>|undefined,timeoutMs=2000){
  if(!clipboard?.writeText)throw Error('Clipboard unavailable');
  let timer:ReturnType<typeof setTimeout>|undefined;
@@ -44,7 +44,7 @@ export async function renderShareCard(canvas:HTMLCanvasElement,card:ShareCard){
  const sans='system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif';
  context.fillStyle=color('--paper');context.fillRect(0,0,1080,1350);
  context.fillStyle=color('--accent-deep');context.fillRect(72,72,6,52);
- context.fillStyle=color('--ink');context.font=`500 38px ${sans}`;context.fillText('SocialCoach',98,112);
+ context.fillStyle=color('--ink');context.font=`500 38px ${sans}`;context.fillText('Hallway Track',98,112);
  context.fillStyle=color('--ink-3');context.font=`24px ${sans}`;context.fillText(pick({zh:'练习记录',en:'PRACTICE NOTE'},card.lang),72,195);
  const block=(value:string,x:number,y:number,width:number,height:number,size:number)=>{
   const layout=fitCardText(value,{width,height,size,lineRatio:1.4},(text,fontSize)=>{context.font=`${fontSize}px ${sans}`;return context.measureText(text).width;});

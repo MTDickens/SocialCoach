@@ -17,7 +17,7 @@ const scenario = z.string().regex(/^[a-z0-9-]{1,80}$/);
 const outcome = z.enum(["success", "partial", "failure"]);
 const origin = z.enum(["scheduled", "arena", "rehearse"]);
 
-export const TASKS = ["schedule", "roleplay", "hint", "assess", "reflect", "debrief-chat", "rehearse", "pattern", "dinner"] as const;
+export const TASKS = ["schedule", "roleplay", "hint", "assess", "reflect", "debrief-chat", "rehearse", "pattern", "dinner", "draft-review"] as const;
 
 export const eventSchema = z.discriminatedUnion("name", [
   z.object({name:z.literal("practice_stage"),ts,mode:z.literal("3d"),practice:z.string().uuid(),scenario,stage:z.enum(["loaded","started","first_reply","review","restart"]),duration_ms:z.number().int().min(0).max(300000),turns:z.number().int().min(0).max(24),byok:z.boolean()}).strict(),

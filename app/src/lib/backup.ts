@@ -35,7 +35,7 @@ export function mergeArchives(current:Archive,incoming:Archive):Archive{
   const result=[...a];for(const value of b){const old=result.find(v=>v.id===value.id);if(old){if(JSON.stringify(old)!==JSON.stringify(value))throw new Error('backup-conflict');}else result.push(value);}return result;
  };
  const sessions=combine(current.sessions,incoming.sessions).sort((a,b)=>b.startedAt-a.startedAt);
- return {...current,profile:current.profile??incoming.profile,sessions,customScenarios:combine(current.customScenarios,incoming.customScenarios),bookmarks:[...new Set([...current.bookmarks,...incoming.bookmarks])],practiceDays:[...new Set([...current.practiceDays,...incoming.practiceDays])],proficiency:estimateProficiency(sessions as Session[],{...incoming.proficiency,...current.proficiency}),patternInsight:null};
+ return {...current,profile:current.profile??incoming.profile,sessions,customScenarios:combine(current.customScenarios,incoming.customScenarios),writingDrafts:combine(current.writingDrafts,incoming.writingDrafts),fieldNotes:combine(current.fieldNotes,incoming.fieldNotes),bookmarks:[...new Set([...current.bookmarks,...incoming.bookmarks])],practiceDays:[...new Set([...current.practiceDays,...incoming.practiceDays])],proficiency:estimateProficiency(sessions as Session[],{...incoming.proficiency,...current.proficiency}),patternInsight:null};
 }
 export function downloadArchive(archive:Archive){
  const url=URL.createObjectURL(new Blob([JSON.stringify({state:archive,version:0,dinner3d:dinnerBackup()},null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`socialcoach-before-restore-${Date.now()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
