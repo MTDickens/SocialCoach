@@ -14,3 +14,10 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// `CF_DEV=1 pnpm dev` gives `next dev` the Cloudflare bindings from wrangler.jsonc
+// (a local D1 file), so sign-in and saved model settings can be exercised
+// without deploying. Plain `pnpm dev` is unchanged and has no accounts.
+if (process.env.CF_DEV === "1") {
+  void import("@opennextjs/cloudflare").then(({ initOpenNextCloudflareForDev }) => initOpenNextCloudflareForDev());
+}

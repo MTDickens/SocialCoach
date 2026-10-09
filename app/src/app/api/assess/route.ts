@@ -1,6 +1,6 @@
 import {readTaskBody,TaskInputSchemas} from "@/lib/task-input";
 import {taskLLM} from "@/lib/task-runtime";
-import { SMART_MODEL, serverLLM } from "@/lib/llm";
+import { requestModel } from "@/lib/account/request-model";
 import { runAssess } from "@/lib/tasks/assess";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { fail, taskStream } from "@/lib/api-utils";
@@ -14,9 +14,10 @@ export const maxDuration = 180;
 export async function POST(req: Request) {
   try {
     checkRateLimit(req);
+    const model = await requestModel(req);
     const body = await readTaskBody(req,TaskInputSchemas["assess"]);
     const input = body;
-    return taskStream((onDelta,signal) => runAssess(input, taskLLM(serverLLM,"assess",signal,event=>console.info("[model_task]",event),body.lang), SMART_MODEL, onDelta,req.signal), { final: true,signal:req.signal });
+    return taskStream((onDelta,signal) => runAssess(input, taskLLM(model.llm,"assess",signal,event=>console.info("[model_task]",event),body.lang), model.smart, onDelta,req.signal), { final: true,signal:req.signal });
   } catch (e) {
     return fail(e);
   }

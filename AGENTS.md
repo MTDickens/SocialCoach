@@ -10,7 +10,8 @@ Hallway Track —— [SocialCoach](https://github.com/GeminiLight/SocialCoach) �
 - **人物和机构一律虚构；不模拟具名真人。** 不把真实公司写成角色的雇主，不给真实的人或机构编事实。学习者的研究内容不写死。
 - **手册（`data/field-guide.ts`）如实区分来源与归纳。** 对不上已核对来源的条目 `basis` 留空，页面会标为「编者归纳」。
 - **写作台不提供模板，不替用户加事实。** 引文与数字的代码核对（`tasks/draft-review.ts`）不能放宽。
-- 原项目的其余约束照旧：NPC 不讨好、反馈先引用原话、语料必须有 `source`、不引入账号或服务端存储、文案是 `{zh, en}`、色值只在 `globals.css`、结构化输出走 `jsonCall()`。
+- **账号只在 Cloudflare 部署上存在，且只存模型配置。** `app/src/lib/account/` 负责 GitHub 登录、D1 里的用户表和每人的模型地址 / 加密后的 key / 模型名。练习记录、草稿、笔记仍然只在浏览器里，不要把它们搬进数据库。API key 永远不回传给浏览器，不写日志；`tests/core/accounts.test.ts` 里的这些断言不能删。没有 D1 绑定或密钥时 `accountEnv()` 返回 null，应用行为与原项目一致。部署说明见 `docs/deploy-cloudflare.md`。
+- 原项目的其余约束照旧：NPC 不讨好、反馈先引用原话、语料必须有 `source`、文案是 `{zh, en}`、色值只在 `globals.css`、结构化输出走 `jsonCall()`。
 - 这个分支只在语料和上述新增文件里做事，尽量不动原项目的核心模块，方便以后合并上游。
 
 ---

@@ -56,6 +56,18 @@
 
 **没有验证的：** 开发环境里没有模型密钥，所以**没有跑过任何一次真实的模型对话**——新场景的实际对练效果、复盘质量、写作台的点评质量都还没有人看过。提示词与场景是按原项目已验证的格式写的，结构检查都通过，但「NPC 是否真的像那个场合里的人」只能靠接上模型后实际去练来判断。写作台的任务逻辑用假模型测过（引文核对、数字核对、重做、报错）。
 
+## Stage H2 — Cloudflare 部署与账号（2026-10-09）
+
+应站点主人的要求，放宽了原项目「不引入账号体系或服务端存储」这一条，范围仅限模型配置。
+
+- **部署**：OpenNext 适配器把 `next build` 的产物跑在 Cloudflare Workers 上（`app/wrangler.jsonc`、`open-next.config.ts`），域名 `hallway.ycjian.com`。Vercel / Docker 路径不受影响。
+- **登录**：GitHub OAuth，不申请任何 scope；`AUTH_ALLOWED_LOGINS` 白名单，每次请求都核对。会话是 HMAC 签名的 HttpOnly / SameSite=Lax cookie，30 天。
+- **数据库（D1）**：`users` 与 `model_configs` 两张表。API key 用 AES-256-GCM 加密，密钥由 Worker 的 `ACCOUNT_SECRET` 派生，并绑定用户 id；数据库单独泄露拿不到可用的 key。
+- **按人路由**：所有模型接口经 `requestModel(req)` 取模型——登录且保存了配置的人用自己的地址、key、模型和 effort；其他人用部署自带的模型（本部署没有）。个人配置失败不回退到共享 key。
+- **模型列表**：`POST /api/account/models` 向用户的地址请求 `/models`，过滤掉 embedding / 语音 / 图像模型。已保存的 key 只能对已保存的地址复用。
+- **端点限制**：只接受公网 https 地址；Worker 侧另有 `global_fetch_strictly_public`。
+- **验证**：8 个新测试，在真实 SQLite 上跑真实的建表语句，并用本地假中转站验证了「登录用户的请求带着他自己的 key、模型名和 `reasoning_effort` 发往他自己的地址」「错误信息不回显 key」。在本地 Workers 运行时（workerd）里实际跑通了登录跳转、D1 读写、加密、保存配置、跨站请求被拒。**没有验证**：真实的 GitHub 登录往返、线上域名、对真实中转站的调用、免费版 CPU 限制是否够用。
+
 ## 没做的
 
 - 新场景的 3D 版本。3D 的人物、房间绑定在原有五个场景上，新场景需要新的 Blender 资产和 `story.ts` 分支。

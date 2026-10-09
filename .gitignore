@@ -30,3 +30,8 @@ docs/screenshots/raw/
 # Regenerable packed Blender sources and production cache (not web assets)
 .blender-work/
 __pycache__/
+
+# Cloudflare build output, local emulator state and local secrets
+app/.open-next/
+app/.wrangler/
+app/.dev.vars
