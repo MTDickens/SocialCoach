@@ -1,5 +1,5 @@
 import type { Scenario, Theory, Case } from "@/data/corpus/types";
-import { COMPETENCIES, CONTEXTS, SKILLS, skillById, competencyById, type Lang, type L, type SkillId } from "@/data/taxonomy";
+import { COMPETENCIES, CONTEXTS, RELATIONSHIP_IDS, SKILLS, skillById, competencyById, type Lang, type L, type SkillId } from "@/data/taxonomy";
 import { SCENARIO_ICON_NAMES } from "@/data/scenario-icons";
 import type { ChatMessage, Profile, Proficiency } from "./types";
 import { SCENE_CRAFT } from './scene-craft';
@@ -100,7 +100,7 @@ Return ONLY a JSON object:
 {
   "query": "<one sentence describing the ideal scenario, in English>",
   "core_constraints": { "target_skills": ["<1-2 skill ids>"], "contexts": ["<0-2 context ids>"] },
-  "optional_constraints": { "related_skills": ["<0-2 skill ids>"], "relationship_types": ["<0-2 of senior|peer|junior|partner|parent|child|sibling|friend|stranger|customer|teacher>"], "difficulty": 1|2|3 },
+  "optional_constraints": { "related_skills": ["<0-2 skill ids>"], "relationship_types": ["<0-2 of ${RELATIONSHIP_IDS.join("|")}>"], "difficulty": 1|2|3 },
   "rationale": "<1–2 sentences addressed to the learner explaining why this practice, why now. ${LANG_RULE[lang]}>"
 }`;
 }

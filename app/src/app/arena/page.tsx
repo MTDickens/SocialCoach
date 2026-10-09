@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Shell } from "@/components/Shell";
 import { Button, Chip, ChoiceGroup, Empty, IconButton, Page } from "@/components/ui";
 import { SCENARIOS } from "@/data/corpus";
-import { SCENARIOS_D } from "@/data/corpus/scenarios-d";
+import { FRONTIER_SCENARIO_IDS } from "@/data/corpus/frontier";
 import type { Scenario } from "@/data/corpus/types";
 import { CONTEXTS, SKILLS, contextById, skillById, type ContextId, type SkillId } from "@/data/taxonomy";
 import { useApp, useLang } from "@/store/useApp";
@@ -20,7 +20,8 @@ const copy = {
   skills: { zh: "练习技能", en: "Practice skill" },
 };
 
-const RECENT_IDS = new Set(SCENARIOS_D.map((s) => s.id));
+/** The collection chip: the scenes this fork was built for. */
+const RECENT_IDS = FRONTIER_SCENARIO_IDS;
 
 export default function Arena() {
   const lang = useLang();

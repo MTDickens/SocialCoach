@@ -154,7 +154,77 @@ function Party({ p, size }: IllustrationProps) {
   );
 }
 
+/** A poster board with a figure pointing at it. */
+function Conference({ p, size }: IllustrationProps) {
+  return (
+    <Frame size={size}>
+      <g stroke={p.line} strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="9" y="9" width="32" height="26" rx="2.5" fill={p.soft} />
+        <path d="M15 16h13M15 22h20M15 28h9" />
+        <path d="M17 35v17M33 35v17" />
+        <circle cx="50" cy="26" r="4.5" fill={p.fill} />
+        <path d="M43 52v-9a7 7 0 0 1 14 0v9" />
+        <path d="m44 38-6-6" />
+      </g>
+    </Frame>
+  );
+}
+
+/** A round table seen from above: four seats, one of them yours. */
+function Mixer({ p, size }: IllustrationProps) {
+  return (
+    <Frame size={size}>
+      <g stroke={p.line} strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="32" cy="32" r="14" fill={p.soft} />
+        <circle cx="32" cy="32" r="4" />
+        <circle cx="32" cy="9" r="4.2" fill={p.fill} />
+        <circle cx="55" cy="32" r="4.2" />
+        <circle cx="32" cy="55" r="4.2" />
+        <circle cx="9" cy="32" r="4.2" />
+        <path d="M25 26l2 2M39 26l-2 2M26 39l2-2M38 39l-2-2" />
+      </g>
+    </Frame>
+  );
+}
+
+/** A call window with a second, smaller participant. */
+function Outreach({ p, size }: IllustrationProps) {
+  return (
+    <Frame size={size}>
+      <g stroke={p.line} strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="7" y="12" width="50" height="34" rx="4" fill={p.soft} />
+        <circle cx="26" cy="26" r="5" fill={p.fill} />
+        <path d="M16 40a10 10 0 0 1 20 0" />
+        <rect x="41" y="30" width="12" height="12" rx="2" />
+        <circle cx="47" cy="35" r="1.8" fill={p.fill} />
+        <path d="M24 54h16M32 46v8" />
+      </g>
+    </Frame>
+  );
+}
+
+/** A lectern and microphone facing a row of seats. */
+function Organizing({ p, size }: IllustrationProps) {
+  return (
+    <Frame size={size}>
+      <g stroke={p.line} strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 26h20l-3 22H25l-3-22Z" fill={p.soft} />
+        <path d="M18 26h28M26 54h12" />
+        <path d="M32 26V15" />
+        <rect x="28.5" y="7" width="7" height="10" rx="3.5" fill={p.fill} />
+        <circle cx="10" cy="46" r="3" />
+        <circle cx="54" cy="46" r="3" />
+        <path d="M5 56a5 5 0 0 1 10 0M49 56a5 5 0 0 1 10 0" />
+      </g>
+    </Frame>
+  );
+}
+
 const ILLUSTRATIONS: Record<ContextId, (props: IllustrationProps) => ReactNode> = {
+  conference: Conference,
+  mixer: Mixer,
+  outreach: Outreach,
+  organizing: Organizing,
   workplace: Workplace,
   family: Family,
   friendship: Friendship,

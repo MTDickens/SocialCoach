@@ -1,0 +1,278 @@
+import { L } from "../../taxonomy";
+import type { Theory } from "../types";
+import { FRONTIER_SOURCES as S } from "./sources";
+
+export const FRONTIER_THEORIES: Theory[] = [
+  {
+    id: "ft-goals-before-techniques",
+    title: L("先讲目标，再讲做法", "Goals Before Techniques"),
+    source: S.ernstConference,
+    principle: L(
+      "Ernst 建议：介绍自己的研究时，先说它要达到什么目标，再说用了什么技术。他同时提醒要听也要讲，先问对方在做什么。",
+      "Ernst advises stating the goals of your research before its techniques. He also says to listen as well as talk, and to ask others about their work first.",
+    ),
+    howTo: [
+      L("先问对方在做什么，认真听完。", "Ask about their work first, and listen to the answer."),
+      L("轮到你时，第一句只讲这项工作想解决什么。", "When it is your turn, spend the first sentence on what the work is trying to achieve."),
+      L("目标讲清楚之后，再讲方法和技术细节。", "Bring in the method and technical detail only after the goal is clear."),
+    ],
+    competencies: ["relationship-skills"],
+    skills: ["research-pitch", "communication"],
+    keywords: ["讲研究", "目标", "方法", "介绍工作", "走廊", "pitch", "goals", "techniques", "hallway", "elevator pitch"],
+  },
+  {
+    id: "ft-ten-second-poster-question",
+    title: L("Poster 前的十秒：一个清楚的问题", "Ten Seconds at the Poster: One Clear Question"),
+    source: S.posterRules,
+    principle: L(
+      "Erren 与 Bourne 指出，poster 要先定目的——你希望看的人做什么——并且只有大约十秒来打动人，所以要围绕一个清楚的问题来讲。poster 的影响既发生在现场，也发生在会后。",
+      "Erren and Bourne say a poster needs a defined purpose, meaning what you want viewers to do, and about ten seconds to sell the work, framed around a clear question. Its impact happens both during and after the session.",
+    ),
+    howTo: [
+      L("开场前写下：你希望停下来的人接下来做什么。", "Before the session, write down what you want a visitor to do next."),
+      L("用一句话抛出你的工作回答的那个问题，不催对方表态。", "Open with the one question your work answers, and engage without pressuring."),
+      L("备好论文链接、联系方式或打印稿，让会后联系很容易。", "Have copies, a URL and contact details ready so follow-up is easy."),
+    ],
+    competencies: ["relationship-skills", "self-management"],
+    skills: ["research-pitch", "following-up"],
+    keywords: ["poster", "海报", "十秒", "开场", "问题", "联系方式", "poster session", "ten seconds", "follow-up", "QR"],
+  },
+  {
+    id: "ft-concrete-reason-per-person",
+    title: L("每个想见的人，都要有一个具体理由", "A Concrete Reason for Each Person"),
+    source: S.ernstConference,
+    principle: L(
+      "Ernst 认为，名气本身不是去找一个人的理由：对每个想见的人，都要有具体的理由和话题。他建议会前发邮件问对方是否参会，并约好时间。",
+      "Ernst holds that fame alone is not a reason to meet someone: have a concrete reason and a topic for each person. He suggests emailing ahead to ask whether they will attend and to schedule a time.",
+    ),
+    howTo: [
+      L("列出想见的人，在每个名字后写下理由和要聊的话题。", "List the people you want to meet and write a reason and a topic beside each name."),
+      L("会前发邮件，问对方是否参会，并提议一个具体时间。", "Email ahead, ask whether they are attending, and propose a specific time."),
+      L("没约上的，听完对方的报告后上前自我介绍，问一个想过的问题。", "If you could not schedule, introduce yourself after their talk and ask a thoughtful question."),
+    ],
+    competencies: ["self-management"],
+    skills: ["making-the-ask", "initiative", "goal-setting"],
+    keywords: ["约时间", "会前邮件", "理由", "话题", "大牛", "schedule", "reach out", "reason", "topic", "famous researcher"],
+  },
+  {
+    id: "ft-join-with-a-question",
+    title: L("带着一个问题加入一圈人", "Join the Circle With a Question"),
+    source: S.ernstConference,
+    principle: L(
+      "Ernst 转述的建议是：想听的人正在聊天时，可以走近去听，除非内容看起来很私人；带着一个问题加入是最好的方式。稍微主动一点没有关系。",
+      "The advice Ernst passes on is that when people you want to hear are talking, you can move up and listen unless it seems personal, and joining with a question is the best way in. Being a little pushy is OK.",
+    ),
+    howTo: [
+      L("走近站定先听，如果听出是私事就退开。", "Move up and listen first; step away if it sounds personal."),
+      L("等一个停顿，就他们正在聊的内容问一个问题。", "At a pause, ask a question about what they are discussing."),
+      L("圈里有认识的人，就请对方帮你介绍一下。", "If you know someone in the group, ask them to introduce you."),
+    ],
+    competencies: ["relationship-skills", "responsible-decision-making", "self-management"],
+    skills: ["joining-and-exiting", "sharp-questions", "initiative"],
+    keywords: ["加入对话", "一圈人", "插话", "茶歇", "走廊", "join", "circle", "hallway", "coffee break", "approach"],
+  },
+  {
+    id: "ft-follow-up-questions",
+    title: L("多问一句：顺着对方的回答追问", "Ask the Follow-Up Question"),
+    source: S.questionAsking,
+    principle: L(
+      "Huang 等人的研究发现，在对话中提问更多的人——尤其是追问对方刚说的内容的人——更受对话伙伴喜欢。在 poster 前或晚宴上，这意味着追问比轮流讲自己更能拉近距离。",
+      "Huang and colleagues found that people who ask more questions, particularly follow-up questions, are better liked by their conversation partners. At a poster or a dinner, this favours following up over taking turns talking about yourself.",
+    ),
+    howTo: [
+      L("对方说完后，先就他刚说的内容问一个问题。", "When they finish, ask a question about what they just said."),
+      L("再顺着他的回答追问一层，而不是换话题。", "Follow their answer one step further instead of changing the subject."),
+      L("发现自己连讲了很久，就用一个问题把话交回去。", "If you notice you have talked for a while, hand the floor back with a question."),
+    ],
+    competencies: ["responsible-decision-making", "relationship-skills"],
+    skills: ["sharp-questions", "building-relationships", "curiosity"],
+    keywords: ["追问", "提问", "好感", "聊天", "倾听", "follow-up question", "questions", "liking", "listening", "small talk"],
+  },
+  {
+    id: "ft-the-ask-costs-less",
+    title: L("开口求助，比你以为的更容易被答应", "People Say Yes More Often Than You Expect"),
+    source: S.justAsk,
+    principle: L(
+      "Flynn 与 Lake 发现，人们会低估别人答应一个直接求助的可能性。原因之一是提出请求的人没有充分意识到，对方说「不」其实很不自在。",
+      "Flynn and Lake found that people underestimate how likely others are to agree to a direct request for help. One reason is that requesters under-appreciate how uncomfortable it is for the other person to say no.",
+    ),
+    howTo: [
+      L("因为觉得会被拒绝而犹豫时，提醒自己这个估计多半偏低。", "When you hesitate because you expect a no, remind yourself that estimate is probably too low."),
+      L("把请求直接说出来：要什么、多少时间。", "Make the request directly: what you want and how much time it takes."),
+      L("既然说不很难，就主动给对方留一个好下的台阶。", "Since saying no is hard for them, offer an easy way to decline."),
+    ],
+    competencies: ["self-management", "self-awareness"],
+    skills: ["making-the-ask", "self-efficacy"],
+    keywords: ["求助", "开口", "怕被拒绝", "请求", "引荐", "ask", "request", "help", "rejection", "intro"],
+  },
+  {
+    id: "ft-advice-signals-competence",
+    title: L("请教不显得弱，反而显得行", "Asking for Advice Does Not Make You Look Weak"),
+    source: S.adviceSeeking,
+    principle: L(
+      "Brooks、Gino 与 Schweitzer 发现，人们担心请教会显得自己能力不足，但被请教的人反而觉得请教者更有能力。当问题本身有难度、并且是亲自就对方擅长的领域去问时，这一点尤其明显。",
+      "Brooks, Gino and Schweitzer found that people fear asking for advice makes them look incompetent, yet being asked leads the adviser to see the asker as more competent. This holds particularly when the task is difficult and the adviser is asked personally about something in their expertise.",
+    ),
+    howTo: [
+      L("挑对方真正擅长的领域里的问题去问。", "Choose a question that sits inside the other person's expertise."),
+      L("亲自、直接向这个人问，而不是泛泛群发。", "Ask that person yourself and directly, not through a broadcast."),
+      L("带真正难的问题去，不用为它难而道歉。", "Bring the genuinely hard problem, and do not apologise for its difficulty."),
+    ],
+    competencies: ["self-management", "relationship-skills", "responsible-decision-making"],
+    skills: ["making-the-ask", "seeking-help", "sharp-questions"],
+    keywords: ["请教", "建议", "资深研究员", "怕显得不懂", "能力", "advice", "mentor", "expertise", "competence", "senior researcher"],
+  },
+  {
+    id: "ft-say-it-plainly",
+    title: L("成果直接说，别包在抱怨或谦虚里", "Say It Plainly, Skip the Humblebrag"),
+    source: S.humblebrag,
+    principle: L(
+      "Sezer、Gino 与 Norton 发现，humblebrag——用抱怨或谦虚包装的炫耀——不如直接说出成绩有效，还会降低别人对你的好感和对你真诚程度的判断。",
+      "Sezer, Gino and Norton found that humblebragging, a brag masked by a complaint or by humility, is less effective than straightforward bragging and reduces liking and perceived sincerity.",
+    ),
+    howTo: [
+      L("把成果说成一个平实的事实。", "State the result as a plain fact."),
+      L("删掉包在外面的抱怨和自嘲。", "Remove the complaint or self-deprecation wrapped around it."),
+      L("开口前检查：这句抱怨的重点如果其实是炫耀，就重写。", "Check before speaking: if the point of the complaint is really the brag, rephrase it."),
+    ],
+    competencies: ["self-awareness"],
+    skills: ["calibrated-claims", "recognizing-strengths"],
+    keywords: ["凡尔赛", "谦虚", "炫耀", "抱怨", "成果", "humblebrag", "bragging", "sincerity", "modesty", "results"],
+  },
+  {
+    id: "ft-bragging-lands-worse",
+    title: L("自我宣传的效果，比你预想的差", "Self-Promotion Lands Worse Than You Predict"),
+    source: S.bragging,
+    principle: L(
+      "Scopelliti、Loewenstein 与 Vosgerau 发现，自我宣传的人会高估别人的正面反应、低估负面反应。应用到会议晚宴上：成果提一次就够，不必反复加码。",
+      "Scopelliti, Loewenstein and Vosgerau found that self-promoters overestimate how positively and underestimate how negatively others react. Applied to a conference dinner, this is a reason to mention a result once and not keep adding to it.",
+    ),
+    howTo: [
+      L("开口前，把你对「对方会很佩服」的预期打个折。", "Before speaking, discount your forecast that the listener will be impressed."),
+      L("成果和话题相关时提一次，说完就停。", "Mention the result once when it is relevant, then stop."),
+      L("接着问对方一个问题，把话题交回去。", "Follow it with a question that hands the conversation back."),
+    ],
+    competencies: ["self-awareness", "social-awareness"],
+    skills: ["calibrated-claims", "perspective-taking"],
+    keywords: ["自我宣传", "吹嘘", "晚宴", "反感", "高估", "self-promotion", "bragging", "dinner", "overestimate", "impress"],
+  },
+  {
+    id: "ft-they-liked-you-more",
+    title: L("对方对你的印象，比你以为的好", "They Liked You More Than You Think"),
+    source: S.likingGap,
+    principle: L(
+      "Boothby 等人发现，聊完之后，人们会系统性地低估对方有多喜欢自己、多享受这次交谈。会后，这意味着「我刚才表现很差」不是不发跟进消息的好理由。",
+      "Boothby and colleagues found that after conversations people systematically underestimate how much their partner liked them and enjoyed their company. After a conference chat, this means a sense that it went badly is a poor reason to skip the follow-up.",
+    ),
+    howTo: [
+      L("聊完觉得很糟时，把这个判断当作多半偏悲观。", "When a conversation feels like it went badly, treat that reading as probably too pessimistic."),
+      L("把本来想放弃的那条跟进消息发出去。", "Send the follow-up message you were about to drop."),
+      L("消息里提一句当时聊到的具体内容，接上话头。", "Mention one specific thing from the conversation to pick up the thread."),
+    ],
+    competencies: ["self-management", "self-awareness", "relationship-skills"],
+    skills: ["following-up", "self-efficacy", "building-relationships"],
+    keywords: ["印象", "尴尬", "聊砸了", "跟进", "自我怀疑", "liking gap", "awkward", "follow-up", "impression", "self-doubt"],
+  },
+  {
+    id: "ft-warm-words-are-not-a-commitment",
+    title: L("热情的话不等于承诺", "Warm Words Are Not a Commitment"),
+    source: S.pgRaise,
+    principle: L(
+      "Paul Graham 写道，投资人常常不明确表态，在说「不」之前看起来一直很接近；他建议把任何不是明确 offer 的回应都当作「不」。投资人的兴趣还在很大程度上取决于其他投资人怎么看。",
+      "Paul Graham writes that investors are often non-committal and seem close until they say no, and advises treating anything short of a definite offer as a no. An investor's interest also depends heavily on what other investors think.",
+    ),
+    howTo: [
+      L("听到「很感兴趣」时记下来，但不算作承诺。", "Note the enthusiasm when you hear it, but do not count it as a commitment."),
+      L("没有明确 offer 之前，按「不」来安排自己的计划。", "Until there is a definite offer, plan as if the answer is no."),
+      L("从对方的处境理解犹豫：既怕投错，也怕错过，还要看别人怎么想。", "Read hesitation from their position: afraid of a flop, afraid of missing a winner, and watching what others think."),
+    ],
+    competencies: ["social-awareness", "self-management"],
+    skills: ["reading-incentives", "following-up"],
+    keywords: ["投资人", "融资", "感兴趣", "回头聊", "承诺", "investor", "fundraising", "pre-seed", "commitment", "offer"],
+  },
+  {
+    id: "ft-say-how-you-would-find-out",
+    title: L("不知道就说不知道，再说怎么查清", "Say How You Would Find Out"),
+    source: S.pgConvince,
+    principle: L(
+      "Paul Graham 认为，说服投资人靠的是自己先想明白这件事为什么值得投、并讲清楚，而不是 pitch 技巧；要只说真话，先说服自己。熟悉自己的领域，遇到答不上来的问题，就说你会怎样找到答案。",
+      "Paul Graham argues that convincing investors comes from understanding why your thing is worth investing in and explaining that clearly, not from pitch technique; stick to the truth and convince yourself first. Know your domain, and when you do not know an answer, say how you would find out.",
+    ),
+    howTo: [
+      L("通话前逐条检查：要说的每个判断，你自己信不信。", "Before the call, check each claim you plan to make: do you believe it yourself?"),
+      L("被问到不知道的，直说不知道，并说你会怎么查清。", "When asked something you do not know, say so and say how you would find out."),
+      L("讲得够短，让对方能原样转述给同事。", "Keep it concise enough for the investor to retell to colleagues."),
+    ],
+    competencies: ["self-awareness", "relationship-skills"],
+    skills: ["calibrated-claims", "research-pitch"],
+    keywords: ["投资人通话", "不知道", "如实", "答不上来", "融资", "investor call", "pitch", "truth", "don't know", "founder"],
+  },
+  {
+    id: "ft-what-was-said-not-who",
+    title: L("可以转述内容，不能说是谁说的", "What Was Said, Not Who Said It"),
+    source: S.chatham,
+    principle: L(
+      "Chatham House Rule 规定：与会者可以自由使用听到的信息，但不得透露发言者以及任何其他与会者的身份和所属机构。闭门晚宴若约定适用这条规则，这意味着内容可以讲，人和机构不能提。",
+      "Under the Chatham House Rule, participants are free to use the information received, but neither the identity nor the affiliation of the speaker(s), nor that of any other participant, may be revealed. If a closed-door dinner adopts it, the content can travel but the people and their organisations cannot.",
+    ),
+    howTo: [
+      L("入座前确认这场是否适用 Chatham House Rule。", "Before you sit down, confirm whether the Chatham House Rule applies."),
+      L("转述时只讲内容，去掉发言人和在场者的名字与机构。", "When you retell, give the content and leave out names and affiliations of speakers and participants."),
+      L("被追问是谁说的，就说那场适用该规则，不确认也不否认猜测。", "If pressed on who said it, say the Rule applied, and neither confirm nor deny guesses."),
+    ],
+    competencies: ["responsible-decision-making", "relationship-skills"],
+    skills: ["discretion", "trading-information"],
+    keywords: ["保密", "闭门", "晚宴", "谁说的", "八卦", "Chatham House Rule", "confidential", "off the record", "closed-door", "gossip"],
+  },
+  {
+    id: "ft-give-first-double-opt-in",
+    title: L("先给后问；引荐前先征得双方同意", "Give First, and Ask Before You Introduce"),
+    source: S.fralic,
+    principle: L(
+      "First Round Review 记录的 Chris Fralic 的做法是：事先了解对方、说清为什么找他，帮不上忙时给出别的人选或角度，付出而不记账。做引荐之前，先问双方是否愿意。",
+      "As First Round Review describes Chris Fralic's practice: research people beforehand and be clear why you are reaching out, suggest other names or angles when you cannot help directly, and give without keeping score. Ask permission on both sides before making an introduction.",
+    ),
+    howTo: [
+      L("联系前先做功课，开头就说清为什么找对方。", "Research the person first, and say up front why you are reaching out."),
+      L("帮不上忙时，给一个别的人选或思路，不计较回报。", "When you cannot help directly, offer another name or angle without keeping score."),
+      L("引荐之前，分别问两边是否愿意被介绍。", "Before an intro, ask each side whether they want it."),
+    ],
+    competencies: ["relationship-skills"],
+    skills: ["trading-information", "building-relationships"],
+    keywords: ["引荐", "介绍人", "先给", "人脉", "做功课", "intro", "double opt-in", "introduction", "network", "give first"],
+  },
+  {
+    id: "ft-believe-and-doubt",
+    title: L("信到敢往前走，疑到看得见漏洞", "Believe Enough to Go Ahead, Doubt Enough to See the Flaws"),
+    source: S.hamming,
+    principle: L(
+      "Hamming 观察到，出色的科学家对一个理论相信到足以往前推进，同时怀疑到足以注意到它的漏洞。放到走廊里的争论中，这意味着亮出明确的判断，同时说清它可能错在哪里。",
+      "Hamming observed that great scientists believe a theory enough to go ahead and doubt it enough to notice its flaws. In a hallway debate, this means stating a clear judgment while saying where it could be wrong.",
+    ),
+    howTo: [
+      L("先给出你的判断和主要理由，不绕。", "State your judgment and its main reason without hedging it away."),
+      L("主动说出你自己最不放心的那个漏洞。", "Name the flaw you yourself are least sure about."),
+      L("对方指出新的漏洞时，当场承认并修正说法。", "When someone points to a new flaw, acknowledge it and revise on the spot."),
+    ],
+    competencies: ["responsible-decision-making", "self-awareness"],
+    skills: ["taking-a-position", "calibrated-claims"],
+    keywords: ["观点", "立场", "争论", "漏洞", "被反驳", "position", "debate", "flaws", "doubt", "update"],
+  },
+  {
+    id: "ft-tell-speakers-the-rules",
+    title: L("主持：规则提前说，时间自己管", "Chairing: Rules Up Front, Clock in Your Hands"),
+    source: S.chairRules,
+    principle: L(
+      "Bateman 与 Bourne 给主持人的规则是：不要让 session 超时，事先让讲者知道时限和你会怎样提示。问答环节由主持人掌控——每位提问者由你来点，讨论拖长或过于技术化时要介入。",
+      "Bateman and Bourne's rules for a chair: do not let things overrun, and let speakers know beforehand the time limits and how you will signal. Keep control of Q&A by choosing each questioner yourself and stepping in when a discussion becomes long or overly technical.",
+    ),
+    howTo: [
+      L("开场前告诉每位讲者时限，以及你怎么提示剩余时间。", "Before the session, tell each speaker the time limit and how you will signal time left."),
+      L("报告中按约定提示时间；到点就往下走，哪怕没有提问。", "Signal the time as agreed, and move on when it is up, even without questions."),
+      L("自己备几个问题，提问者由你点，讨论跑远时打断。", "Prepare a few questions, pick each questioner yourself, and cut in when a discussion drifts."),
+    ],
+    competencies: ["relationship-skills"],
+    skills: ["convening", "leadership"],
+    keywords: ["主持", "超时", "问答", "讲者", "控场", "session chair", "moderating", "overrun", "Q&A", "time limit"],
+  },
+];

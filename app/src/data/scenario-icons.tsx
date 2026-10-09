@@ -3,6 +3,9 @@ import {
   Flame, Gift, GraduationCap, Hand, Handshake, Heart, HeartCrack, Home, Megaphone,
   MessageSquare, MessageSquareWarning, Mic, Moon, Package, PiggyBank, Receipt, Scale,
   ShieldAlert, Smartphone, Split, Stethoscope, Trophy, UserX, Users, Utensils, Volume2, Wine,
+  BadgeCheck, CalendarClock, CircleDollarSign, IdCard, Lightbulb, ListChecks, Lock, LogOut, Martini,
+  MessageCircleQuestion, Network, Phone, Podium, Presentation, QrCode, Rocket, Send, Swords, Target,
+  UserPlus, UtensilsCrossed, Video,
   type LucideIcon,
 } from "lucide-react";
 import { createElement } from "react";
@@ -64,6 +67,29 @@ export const SCENARIO_ICONS = {
   utensils: Utensils,
   "volume-2": Volume2,
   wine: Wine,
+  // Hallway Track additions
+  "badge-check": BadgeCheck,
+  "calendar-clock": CalendarClock,
+  "circle-dollar-sign": CircleDollarSign,
+  "id-card": IdCard,
+  lightbulb: Lightbulb,
+  "list-checks": ListChecks,
+  lock: Lock,
+  "log-out": LogOut,
+  martini: Martini,
+  "message-circle-question": MessageCircleQuestion,
+  network: Network,
+  phone: Phone,
+  podium: Podium,
+  presentation: Presentation,
+  "qr-code": QrCode,
+  rocket: Rocket,
+  send: Send,
+  swords: Swords,
+  target: Target,
+  "user-plus": UserPlus,
+  "utensils-crossed": UtensilsCrossed,
+  video: Video,
 } satisfies Record<string, LucideIcon>;
 
 export type ScenarioIconName = keyof typeof SCENARIO_ICONS;
@@ -75,6 +101,10 @@ export const isScenarioIcon = (v: unknown): v is ScenarioIconName =>
 
 /** Fallback when a scenario has no icon of its own — never the primary source. */
 const BY_CONTEXT: Record<ContextId, ScenarioIconName> = {
+  conference: "presentation",
+  mixer: "utensils-crossed",
+  outreach: "video",
+  organizing: "podium",
   workplace: "briefcase",
   family: "home",
   friendship: "coffee",
@@ -86,6 +116,10 @@ const BY_CONTEXT: Record<ContextId, ScenarioIconName> = {
 
 /** Soft, category-specific hues for context chips and onboarding cards. */
 export const CONTEXT_HUES: Record<ContextId, number> = {
+  conference: 245,
+  mixer: 20,
+  outreach: 160,
+  organizing: 95,
   workplace: 215,
   family: 32,
   friendship: 48,

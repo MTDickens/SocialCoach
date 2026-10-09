@@ -9,6 +9,9 @@ import { THEORIES_C } from "../src/data/corpus/theories-c";
 import { CASES_C } from "../src/data/corpus/cases-c";
 import { SKILLS, COMPETENCIES, CONTEXTS, RELATIONSHIPS } from "../src/data/taxonomy";
 import { SCENARIO_ICONS } from "../src/data/scenario-icons";
+import { FRONTIER_CASES, FRONTIER_ROLES, FRONTIER_SCENARIOS, FRONTIER_THEORIES } from "../src/data/corpus/frontier";
+import { FRONTIER_SOURCES } from "../src/data/corpus/frontier/sources";
+import { CONTEXTS as ALL_CONTEXTS, FRONTIER_CONTEXTS, FRONTIER_SKILLS } from "../src/data/taxonomy";
 
 const skills = new Map(SKILLS.map((s) => [s.id, s.competency]));
 const competencies = new Set(COMPETENCIES.map((c) => c.id));
@@ -46,7 +49,7 @@ for (const s of SCENARIOS) {
   for (const relationship of s.relationship) assert(relationship in RELATIONSHIPS, `${s.id}: relationship`);
   for (const skill of s.relatedSkills ?? []) assert(skills.has(skill), `${s.id}: related skill`);
 }
-for (const item of [...SCENARIOS_C, ...SCENARIOS_D, ...THEORIES_C, ...CASES_C]) {
+for (const item of [...SCENARIOS_C, ...SCENARIOS_D, ...THEORIES_C, ...CASES_C, ...FRONTIER_SCENARIOS, ...FRONTIER_THEORIES, ...FRONTIER_CASES]) {
   bilingual(item, item.id);
   for (const skill of item.skills) assert(item.competencies.includes(skills.get(skill)!), `${item.id}: missing competency for ${skill}`);
   assert(
@@ -55,7 +58,7 @@ for (const item of [...SCENARIOS_C, ...SCENARIOS_D, ...THEORIES_C, ...CASES_C]) 
   );
   if (typeof item.source !== "string") assert.equal(new URL(item.source.url!).protocol, "https:");
 }
-for (const s of [...SCENARIOS_C, ...SCENARIOS_D]) {
+for (const s of [...SCENARIOS_C, ...SCENARIOS_D, ...FRONTIER_SCENARIOS]) {
   assert(s.icon && s.icon in SCENARIO_ICONS, `${s.id}: unknown icon`);
   assert(
     s.characters.every((c) => c.hidden && c.stance.en && c.personality.en),
@@ -63,7 +66,7 @@ for (const s of [...SCENARIOS_C, ...SCENARIOS_D]) {
   );
   assert(s.source.includes("Original fictional practice"), `${s.id}: missing provenance label`);
 }
-for (const c of CASES_C) {
+for (const c of [...CASES_C, ...FRONTIER_CASES]) {
   assert(c.title.zh.startsWith("示例") && c.title.en.startsWith("Illustration"), `${c.id}: fictional case not labelled`);
 }
 assert.equal(SCENARIOS_C.length, 12);
@@ -76,6 +79,37 @@ for (const s of SCENARIOS_D) {
     assert.equal(session.learnerCharacterId, "you");
     assert.notEqual(session.scenario.characters[0].role[lang], lang === "zh" ? "你自己" : "Yourself");
   }
+}
+// ── Hallway Track: the fork's own corpus ─────────────────────────────────────
+const frontierSkills = new Set<string>(FRONTIER_SKILLS);
+const allowedUrls = new Set<string>(Object.values(FRONTIER_SOURCES).map((v) => v.url));
+for (const s of FRONTIER_SCENARIOS) {
+  assert((FRONTIER_CONTEXTS as string[]).includes(s.context), `${s.id}: not a Hallway Track context`);
+  assert(FRONTIER_ROLES[s.id]?.zh && FRONTIER_ROLES[s.id]?.en, `${s.id}: missing learner role`);
+  assert(s.skills.some((k) => frontierSkills.has(k)), `${s.id}: no Hallway Track skill`);
+  assert(s.simulationFacts?.zh && s.simulationFacts.en && s.simulationDirection?.zh && s.simulationDirection.en, `${s.id}: needs fixed facts and conditional play`);
+  assert(!s.characters.some((c) => c.id !== "you" && c.playable), `${s.id}: only the learner is playable`);
+  assert(s.source.includes(`frontier/`) && s.source.endsWith(`#${s.id}`), `${s.id}: source must point to its authored record`);
+  for (const url of s.source.match(/https:\/\/[^\s)]+/g) ?? []) assert(allowedUrls.has(url), `${s.id}: cites an unchecked source ${url}`);
+  assert((s.source.match(/https:\/\//g) ?? []).length >= 1, `${s.id}: no checked source`);
+  for (const lang of ["zh", "en"] as const) {
+    const session = buildSession(SCENARIOS.find((item) => item.id === s.id)!, "arena", lang);
+    assert.equal(session.learnerCharacterId, "you");
+    assert.notEqual(session.scenario.characters[0].role[lang], lang === "zh" ? "你自己" : "Yourself");
+  }
+}
+for (const context of FRONTIER_CONTEXTS) assert(FRONTIER_SCENARIOS.filter((s) => s.context === context).length >= 6, `${context}: too few scenes`);
+for (const skill of FRONTIER_SKILLS) {
+  assert(FRONTIER_SCENARIOS.filter((s) => s.skills.includes(skill)).length >= 2, `${skill}: fewer than two scenes practise it`);
+  assert([...FRONTIER_THEORIES, ...FRONTIER_CASES].some((k) => k.skills.includes(skill)), `${skill}: no knowledge item`);
+}
+for (const k of [...FRONTIER_THEORIES, ...FRONTIER_CASES]) assert(allowedUrls.has(k.source.url!), `${k.id}: unchecked source`);
+assert.equal(ALL_CONTEXTS.filter((c) => c.track === "frontier").length, 4);
+{
+  const pickF = retrieveScenario({ query: "investor dinner what are you seeing", core_constraints: { target_skills: ["reading-incentives"], contexts: ["mixer"] }, rationale: "Corpus check" }, new Set());
+  assert.equal(pickF.scenario?.context, "mixer", "dinner scenes not reachable through scheduling retrieval");
+  const kF = retrieveKnowledge({ skills: ["discretion", "trading-information"], context: "mixer", query: "who said what at the dinner 晚宴 保密", acquisition: true, performance: true });
+  assert(kF.theories.some((t) => t.id.startsWith("ft-")) && kF.cases.some((c) => c.id.startsWith("fc-")), "Hallway Track knowledge not retrievable");
 }
 assert.equal(THEORIES_C.length, 8);
 assert.equal(CASES_C.length, 6);
