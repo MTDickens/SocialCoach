@@ -3,20 +3,27 @@ import { ModelAccessNotice } from "./ModelAccessNotice";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
-import { House, MessagesSquare, ChartNoAxesCombined, BookOpen, UserRound, PenLine, ArrowUpRight, HardDrive } from "lucide-react";
+import { House, MessagesSquare, ChartNoAxesCombined, BookOpen, UserRound, PenLine, ArrowUpRight, HardDrive, Mail, Compass } from "lucide-react";
 import { DinnerEntry } from "./DinnerEntry";
 import { BrandMark } from "./BrandMark";
 import { GitHubLink } from "./GitHubLink";
 import { useLang } from "@/store/useApp";
 import { t } from "@/lib/i18n";
 
+/**
+ * `rail` marks destinations that only the desktop rail lists. The phone bar
+ * holds six; the strategy library is one tap away from the field guide.
+ */
 const tabs = [
-  { href: "/", key: "nav_home", Icon: House },
-  { href: "/arena", key: "nav_arena", Icon: MessagesSquare },
-  { href: "/progress", key: "nav_progress", Icon: ChartNoAxesCombined },
-  { href: "/learn", key: "nav_learn", Icon: BookOpen },
-  { href: "/settings", key: "nav_me", Icon: UserRound },
+  { href: "/", key: "nav_home", Icon: House, rail: false },
+  { href: "/arena", key: "nav_arena", Icon: MessagesSquare, rail: false },
+  { href: "/write", key: "nav_write", Icon: Mail, rail: false },
+  { href: "/field", key: "nav_field", Icon: Compass, rail: false },
+  { href: "/progress", key: "nav_progress", Icon: ChartNoAxesCombined, rail: false },
+  { href: "/learn", key: "nav_library", Icon: BookOpen, rail: true },
+  { href: "/settings", key: "nav_me", Icon: UserRound, rail: false },
 ] as const;
+const barTabs = tabs.filter((tab) => !tab.rail);
 
 /** Same active rule for both navs: "/" only matches itself. */
 function useIsActive() {
@@ -29,13 +36,13 @@ export function TabBar() {
   const lang = useLang();
   return (
     <nav className="app-tabbar fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[var(--col)] md:max-w-[40rem] z-30 bg-paper border-t border-line pb-safe lg:hidden" aria-label={t(lang, "nav_label")}>
-      <ul className="grid grid-cols-5 h-[60px]">
-        {tabs.map(({ href, key, Icon }) => {
+      <ul className="grid grid-cols-6 h-[60px]">
+        {barTabs.map(({ href, key, Icon }) => {
           const active = isActive(href);
           return (
             <li key={href} className="flex">
               <Link href={href} aria-current={active ? "page" : undefined} className={clsx("press flex-1 flex flex-col items-center justify-center gap-1 text-[11px]", active ? "text-ink font-semibold" : "text-ink-3 font-medium")}>
-                <span className="px-4 py-1"><Icon size={19} strokeWidth={active ? 2 : 1.6} aria-hidden /></span>
+                <span className="px-3 py-1"><Icon size={19} strokeWidth={active ? 2 : 1.6} aria-hidden /></span>
                 <span>{t(lang, key)}</span>
               </Link>
             </li>
@@ -46,7 +53,7 @@ export function TabBar() {
   );
 }
 
-/** Desktop nav: the same five destinations, stood up along the left edge of the sheet. */
+/** Desktop nav: every destination, stood up along the left edge of the sheet. */
 export function NavRail() {
   const isActive = useIsActive();
   const lang = useLang();

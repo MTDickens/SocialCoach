@@ -1,6 +1,21 @@
 # AGENTS.md
 
-SocialCoach —— LLM 社交技能教练。应用在 `app/`（Next.js），仓库根只有文档。
+Hallway Track —— [SocialCoach](https://github.com/GeminiLight/SocialCoach) 的分支，专练前沿 AI 圈的社交场合。应用在 `app/`（Next.js），仓库根只有文档。
+
+## 分支约定（与下文冲突时以此为准）
+
+- 先读 `wiki/13-stage-hallway-track.md`：这个分支加了什么、为什么、还没做什么。`wiki/00`–`12` 描述的是原项目，未改动。
+- **对外名称是 `Hallway Track`。** 下文「产品名一律是 SocialCoach」「主句四处同源」是原项目的规定，在本分支不适用；内部存储键仍以 `socialcoach.` 开头，不要改。About、README 与 `NOTICE.md` 保留对原项目的署名。
+- **新语料只放在 `app/src/data/corpus/frontier/`。** 场景必须有 `simulationFacts`、`simulationDirection`、至少一项 `track: "frontier"` 的能力，`source` 用 `frontierSource()` 且只引用 `sources.ts` 里核对过的来源。加新来源前先打开原文核对题目、作者和要用的论点。`pnpm exec tsx scripts/check-corpus.ts` 会检查这些。
+- **人物和机构一律虚构；不模拟具名真人。** 不把真实公司写成角色的雇主，不给真实的人或机构编事实。学习者的研究内容不写死。
+- **手册（`data/field-guide.ts`）如实区分来源与归纳。** 对不上已核对来源的条目 `basis` 留空，页面会标为「编者归纳」。
+- **写作台不提供模板，不替用户加事实。** 引文与数字的代码核对（`tasks/draft-review.ts`）不能放宽。
+- 原项目的其余约束照旧：NPC 不讨好、反馈先引用原话、语料必须有 `source`、不引入账号或服务端存储、文案是 `{zh, en}`、色值只在 `globals.css`、结构化输出走 `jsonCall()`。
+- 这个分支只在语料和上述新增文件里做事，尽量不动原项目的核心模块，方便以后合并上游。
+
+---
+
+以下为原项目的说明。
 
 ## 入口
 

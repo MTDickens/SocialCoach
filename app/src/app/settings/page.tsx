@@ -36,6 +36,8 @@ export default function Settings() {
     updateProfile,
     reset,
     customScenarios,
+    writingDrafts,
+    fieldNotes,
     bookmarks,
     practiceDays,
   } = useApp();
@@ -54,7 +56,7 @@ export default function Settings() {
     const blob = new Blob(
       [
         JSON.stringify(
-          { profile, proficiency, sessions, customScenarios, bookmarks, practiceDays, dinner3d: dinnerBackup(), avatar: { seed: settings.avatarSeed, portrait: settings.avatarPortrait, image: settings.avatarImage }, exportedAt: new Date().toISOString() },
+          { profile, proficiency, sessions, customScenarios, writingDrafts, fieldNotes, bookmarks, practiceDays, dinner3d: dinnerBackup(), avatar: { seed: settings.avatarSeed, portrait: settings.avatarPortrait, image: settings.avatarImage }, exportedAt: new Date().toISOString() },
           null,
           2,
         ),
@@ -63,7 +65,7 @@ export default function Settings() {
     );
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `socialcoach-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `hallway-track-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(a.href);
   };

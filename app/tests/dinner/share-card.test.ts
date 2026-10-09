@@ -4,7 +4,7 @@ import {defaultShareCard,shareCardText,sharePreparedFile,fitCardText,copyShareTe
 
 test('a default share has no practice title, learner name, private quote or local report URL',()=>{
  const card=defaultShareCard('zh',2),text=shareCardText(card);
- assert.ok(text.includes('SocialCoach'));assert.ok(!text.includes('http'));assert.equal(card.quote,'');
+ assert.ok(text.includes('Hallway Track'));assert.ok(!text.includes('http'));assert.equal(card.quote,'');
  assert.equal(defaultShareCard('en',3).quality.includes('3'),true);
  const edited={...card,title:'我想分享的一句',quote:'已删去私人信息的文字'};
  assert.ok(shareCardText(edited).includes(edited.quote));

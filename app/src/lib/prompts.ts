@@ -4,6 +4,7 @@ import { SCENARIO_ICON_NAMES } from "@/data/scenario-icons";
 import type { ChatMessage, Profile, Proficiency } from "./types";
 import { SCENE_CRAFT } from './scene-craft';
 import { NPC_CRAFT } from './npc-craft';
+import { FIELD_CRAFT, fieldAssessmentBlock, fieldBlock } from './field-craft';
 
 export const pick = (l: L, lang: Lang) => l[lang];
 
@@ -17,7 +18,9 @@ export function taxonomyBlock(): string {
     (c) => `- ${c.id} (${c.name.en}): ${SKILLS.filter((s) => s.competency === c.id).map((s) => s.id).join(", ")}`,
   ).join("\n");
   const ctx = CONTEXTS.map((c) => `${c.id} (${c.types.map((t) => t.en).join("/")})`).join("; ");
-  return `SKILL TAXONOMY (CASEL competency → skill ids):\n${skills}\nCONTEXT IDS: ${ctx}`;
+  // The fork's own skills are not self-explanatory from their ids alone.
+  const gloss = SKILLS.filter((k) => k.track === "frontier").map((k) => `- ${k.id}: ${k.behavior.en}`).join("\n");
+  return `SKILL TAXONOMY (CASEL competency → skill ids):\n${skills}\nFRONTIER-AI NETWORKING SKILLS (prefer these when the situation is a conference, dinner, investor or outreach conversation, or organizing an event):\n${gloss}\nCONTEXT IDS: ${ctx}\nRELATIONSHIP TYPES: ${RELATIONSHIP_IDS.join(", ")}`;
 }
 
 export function profileBlock(p: Profile, prof: Proficiency, lang: Lang): string {
@@ -132,7 +135,7 @@ ${PRACTICE_POLICY}
 ${SCENE_CRAFT}
 
 ${NPC_CRAFT}
-
+${fieldBlock(s.context)}
 REALISM RULES
 - Each NPC speaks in character: their personality, stance and emotional state drive every line. They are not helpful assistants. They have their own goals and will push back, deflect, get defensive, or warm up only when the learner earns it.
 - React specifically to what the learner just said — quote or echo their words when natural. Never ignore a concrete proposal.
@@ -183,7 +186,7 @@ export function hintSystem(s: Scenario, learnerId: string, lang: Lang) {
   return `You are the SocialCoach coach whispering to a learner mid-practice. Given the scenario and transcript, give ONE hint (≤ 40 words) for their next line: name the move (e.g. "restate his concern first") and, if useful, a starter phrase in quotes. Do not write the whole line for them. No praise, no preamble.
 ${scenarioBlock(s, lang, learnerId, "learner")}
 ${PRACTICE_POLICY}
-Offer a move suited to the learner's current intent, not a way to tick a fixed objective. Never supply invented evidence.
+${fieldAssessmentBlock(s.context)}Offer a move suited to the learner's current intent, not a way to tick a fixed objective. Never supply invented evidence.
 ${LANG_RULE[lang]} Return plain text only.`;
 }
 
@@ -204,7 +207,7 @@ CURRENT INTENT FIRST: Rate communication before judging the initial scene aims. 
 ${scenarioBlock(s, lang, learnerId, "learner")}
 
 ${PRACTICE_POLICY}
-
+${fieldAssessmentBlock(s.context)}
 LEARNER'S TARGET SKILLS: ${goalNames}
 SKILLS EXERCISED IN THIS SCENE: ${assessmentSkills}
 
@@ -294,9 +297,12 @@ ${PRACTICE_POLICY}
 - Tag with the taxonomy below: 1–3 skill ids (most relevant first), 1–2 competency ids, one context id and type, relationship types, difficulty 1–3, maxTurns 6–10.
 - Opening line comes from an NPC and drops the learner straight into the tension.
 - Give the opening a concrete disputed choice from this situation, not a generic greeting. In NPC stance/personality, define what would make a partial offer feasible and what would still be disputed afterward. Keep several legitimate routes, including refusal and repair; no fixed script or required slogan. The first line must not reveal the hidden motive. Never invent an emergency, sanction, prior agreement or real-person fact for excitement. If a fictional practice assumption is needed, label it in background.
+- If the situation is a conference, a dinner or mixer, an investor or outreach conversation, or organizing an event in the AI research world, use the matching context id (conference, mixer, outreach, organizing) and write the NPCs to the room norms below. If the learner names a real person or organisation, keep the name as they gave it but treat everything about that person's motives, plans and private views as a labelled practice assumption; never state invented facts about them, and say in the background that this is a rehearsal partner, not a prediction of the real person.
 - Pick the ONE icon from the list below that best names the situation — the object or act at its centre, not the emotion. Use the context's obvious choice only if nothing fits better.
 ${iconBlock()}
 ${taxonomyBlock()}
+
+${FIELD_CRAFT}
 
 ${LANG_RULE[lang]} Provide every text field as an object {"zh": "...", "en": "..."} but fill ONLY the "${lang}" key with real content; set the other key to an empty string "" (the app mirrors it). Keep total output compact.
 

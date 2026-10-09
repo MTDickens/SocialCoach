@@ -9,6 +9,8 @@ import { DEVICE_KEY, OPEN_DAY_KEY } from "@/lib/analytics/keys";
 import {parseArchive} from '@/lib/archive';
 import {estimateProficiency} from '@/lib/proficiency';
 import {createArchiveStorage,type SaveIssue} from './archive-storage';
+import type {WritingDraft} from '@/lib/writing';
+import type {FieldNote} from '@/lib/field-notes';
 
 export type Theme = "system" | "light" | "dark";
 
@@ -69,6 +71,10 @@ interface AppState {
   proficiency: Proficiency;
   sessions: Session[];
   customScenarios: Scenario[];
+  /** Drafts reviewed at the writing desk, newest first. */
+  writingDrafts: WritingDraft[];
+  /** The learner's own record of real rooms, newest first. */
+  fieldNotes: FieldNote[];
   bookmarks: string[];
   /** ISO dates (YYYY-MM-DD) with at least one completed practice */
   practiceDays: string[];
@@ -93,6 +99,10 @@ interface AppState {
   addReflection: (id: string, r: Reflection) => void;
   updateReflection: (id: string, idx: number, patch: Partial<Reflection>) => void;
   addCustomScenario: (s: Scenario) => void;
+  saveWritingDraft: (d: WritingDraft) => void;
+  removeWritingDraft: (id: string) => void;
+  saveFieldNote: (n: FieldNote) => void;
+  removeFieldNote: (id: string) => void;
   toggleBookmark: (id: string) => void;
   setToday: (sessionId: string | null) => void;
   setSettings: (s: Partial<Settings>) => void;
@@ -114,6 +124,8 @@ const initial = {
   proficiency: {},
   sessions: [],
   customScenarios: [],
+  writingDrafts: [],
+  fieldNotes: [],
   bookmarks: [],
   practiceDays: [],
   todaySessionId: null,
@@ -197,6 +209,12 @@ export const useApp = create<AppState>()(
           sessions: s.sessions.map((x) => (x.id === id ? { ...x, reflections: x.reflections.map((r, i) => (i === idx ? { ...r, ...patch } : r)) } : x)),
         })),
       addCustomScenario: (sc) => set((s) => ({ customScenarios: [sc, ...s.customScenarios.filter((x) => x.id !== sc.id)] })),
+      // Bounded on purpose: a draft with its review is a few kilobytes, and
+      // localStorage is shared with every practice transcript.
+      saveWritingDraft: (d) => set((s) => ({ writingDrafts: [d, ...s.writingDrafts.filter((x) => x.id !== d.id)].slice(0, 40) })),
+      removeWritingDraft: (id) => set((s) => ({ writingDrafts: s.writingDrafts.filter((x) => x.id !== id) })),
+      saveFieldNote: (n) => set((s) => ({ fieldNotes: [n, ...s.fieldNotes.filter((x) => x.id !== n.id)].slice(0, 200) })),
+      removeFieldNote: (id) => set((s) => ({ fieldNotes: s.fieldNotes.filter((x) => x.id !== id) })),
       toggleBookmark: (id) => set((s) => ({ bookmarks: s.bookmarks.includes(id) ? s.bookmarks.filter((b) => b !== id) : [...s.bookmarks, id] })),
       setToday: (todaySessionId) => set({ todaySessionId, todayDate: todayKey() }),
       setSettings: (p) => set((s) => ({ settings: { ...s.settings, ...p } })),
@@ -206,7 +224,7 @@ export const useApp = create<AppState>()(
         try {
           // Clear only this app's tab state, including unsent practice drafts.
           for (const key of Object.keys(sessionStorage)) {
-            if (key === "socialcoach.rehearsal-draft" || key === "socialcoach.rehearsal-brief" || key === "socialcoach.arena.location" || key.startsWith("socialcoach.draft.")) sessionStorage.removeItem(key);
+            if (key === "socialcoach.rehearsal-draft" || key === "socialcoach.rehearsal-brief" || key === "socialcoach.arena.location" || key === "socialcoach.writing-draft" || key.startsWith("socialcoach.draft.")) sessionStorage.removeItem(key);
           }
         } catch {}
         // The analytics device id goes with everything else: a reset learner is a new device.
@@ -223,6 +241,8 @@ export const useApp = create<AppState>()(
         proficiency: s.proficiency,
         sessions: s.sessions,
         customScenarios: s.customScenarios,
+        writingDrafts: s.writingDrafts,
+        fieldNotes: s.fieldNotes,
         bookmarks: s.bookmarks,
         practiceDays: s.practiceDays,
         todaySessionId: s.todaySessionId,

@@ -1,7 +1,7 @@
 {
-  "name": "SocialCoach",
-  "short_name": "SocialCoach",
-  "description": "想说的话，说出来。",
+  "name": "Hallway Track",
+  "short_name": "Hallway Track",
+  "description": "会场、晚宴、投资人的电话，先在这里练一遍。",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8f5ef",

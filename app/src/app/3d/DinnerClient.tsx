@@ -10,7 +10,7 @@ const copy = {
   loading: { zh: '正在准备现场…', en: 'Preparing the scene…' },
   failed: { zh: '现场暂时没能打开。', en: 'The scene could not open.' },
   retry: { zh: '重新打开', en: 'Try again' },
-  home: { zh: '返回 SocialCoach', en: 'Back to SocialCoach' },
+  home: { zh: '返回 Hallway Track', en: 'Back to Hallway Track' },
 };
 function Loading() {
   const lang = useLang();

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Check, Clock3, RefreshCw } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Clock3, Compass, Mail, RefreshCw } from "lucide-react";
 import { DinnerEntry } from "@/components/DinnerEntry";
 import { CoachMascot } from "@/components/CoachMascot";
 import { Shell } from "@/components/Shell";
@@ -188,6 +188,21 @@ export default function Home() {
             </section>
 
             {rehearsalInvitation}
+
+            <section className="flex flex-col gap-3" aria-labelledby="home-tools">
+              <h2 id="home-tools" className="eyebrow">{t(lang, "home_tools")}</h2>
+              <div className="grid gap-3 md:grid-cols-2">
+                {([["/write", Mail, "home_write_title", "home_write_body"], ["/field", Compass, "home_field_title", "home_field_body"]] as const).map(([href, Icon, title, body]) => (
+                  <Link key={href} href={href} className="press card card-link p-5 flex flex-col gap-2">
+                    <span className="flex items-center justify-between gap-3">
+                      <span className="flex items-center gap-2 font-semibold text-[16px]"><Icon size={17} className="text-accent-deep" aria-hidden />{t(lang, title)}</span>
+                      <ArrowUpRight size={16} className="text-ink-3" aria-hidden />
+                    </span>
+                    <span className="text-[13px] text-ink-2 leading-relaxed">{t(lang, body)}</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
 
             {recent[0]?.report?.nextStep && recent[0].report.verdictEvidence && (
               <section className="takeaway-note flex flex-col gap-3 py-5 border-y border-line">
